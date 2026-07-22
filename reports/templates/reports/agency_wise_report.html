@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Agency Wise Report</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Agency</th>
+
+                        <th>Total Delays</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for r in report %}
+
+                    <tr>
+
+                        <td>{{ r.agency__agency_name }}</td>
+
+                        <td>{{ r.total }}</td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="2" class="text-center">
+
+                            No Records Found
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

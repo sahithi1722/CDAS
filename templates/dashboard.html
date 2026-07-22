@@ -1,0 +1,603 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.dashboard-header{
+    background:#fff;
+    border-radius:15px;
+    padding:22px 28px;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
+
+.dashboard-card{
+    border:none;
+    border-radius:15px;
+    color:#fff;
+    transition:.3s;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-4px);
+}
+
+.dashboard-card .card-body{
+    padding:25px;
+}
+
+.dashboard-card h2{
+    font-weight:700;
+    margin-top:8px;
+}
+
+.card-blue{
+    background:linear-gradient(135deg,#2563EB,#60A5FA);
+}
+
+.card-green{
+    background:linear-gradient(135deg,#16A34A,#4ADE80);
+}
+
+.card-orange{
+    background:linear-gradient(135deg,#EA580C,#FDBA74);
+}
+
+.card-red{
+    background:linear-gradient(135deg,#DC2626,#FB7185);
+}
+
+.dashboard-box{
+    border:none;
+    border-radius:15px;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.dashboard-box .card-header{
+    background:#fff;
+    border-bottom:1px solid #eee;
+    font-weight:600;
+}
+
+.progress{
+    height:8px;
+}
+</style>
+
+<div class="container-fluid py-4">
+
+<div class="dashboard-header">
+
+<div class="row align-items-center">
+
+<div class="col-md-8">
+
+<h2 class="fw-bold mb-1">
+Centralized Delay Analysis System
+</h2>
+
+<p class="text-muted mb-0">
+Industrial Delay Monitoring Dashboard
+</p>
+
+</div>
+
+<div class="col-md-4 text-end">
+
+<h5 class="mb-1">
+Welcome,
+<span class="text-primary">
+{{ request.session.emp_name }}
+</span>
+</h5>
+
+<small class="text-muted">
+{{ request.session.role }}
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="row g-4">
+
+<div class="col-lg-3">
+
+<div class="card dashboard-card card-blue">
+
+<div class="card-body">
+
+<h6>Total Delays</h6>
+
+<h2>{{ total_delays }}</h2>
+
+<p class="mb-0">
+Recorded Delays
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3">
+
+<div class="card dashboard-card card-green">
+
+<div class="card-body">
+
+<h6>Total Users</h6>
+
+<h2>{{ total_users }}</h2>
+
+<p class="mb-0">
+Registered Users
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3">
+
+<div class="card dashboard-card card-orange">
+
+<div class="card-body">
+
+<h6>Equipment</h6>
+
+<h2>{{ total_equipment }}</h2>
+
+<p class="mb-0">
+Available Equipment
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3">
+
+<div class="card dashboard-card card-red">
+
+<div class="card-body">
+
+<h6>Average Delay</h6>
+
+<h2>{{ average_duration }}</h2>
+
+<p class="mb-0">
+Average Duration
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="row">
+
+<div class="col-lg-6 mb-4">
+
+<div class="card dashboard-box h-100">
+
+<div class="card-header">
+
+<h5 class="mb-0 fw-bold">
+Agency-wise Delays
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<div style="height:220px;width:220px;margin:auto;">
+<canvas id="agencyChart"></canvas>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-6 mb-4">
+
+<div class="card dashboard-box h-100">
+
+<div class="card-header d-flex justify-content-between align-items-center">
+
+<div>
+
+<h5 class="fw-bold mb-1">
+Top Delay Impact Areas
+</h5>
+
+<small class="text-muted">
+Equipment-wise Delay Count
+</small>
+
+</div>
+
+<span class="badge rounded-pill bg-primary">
+Equipment Analysis
+</span>
+
+</div>
+
+<div class="card-body">
+
+<canvas id="equipmentChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<!-- ================= Second Row ================= -->
+
+<div class="row">
+
+    <!-- Shop Wise Chart -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card dashboard-box h-100">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <span class="fw-bold">
+
+                    Shop-wise Delay Distribution
+
+                </span>
+
+                <span class="badge bg-primary">
+
+                    Shops
+
+                </span>
+
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="shopChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Delay Status Overview -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card dashboard-box h-100">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <span class="fw-bold">
+
+                    Delay Status Overview
+
+                </span>
+
+                <span class="badge bg-success">
+
+                    Live
+
+                </span>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row text-center">
+
+                    <div class="col-6 mb-4">
+
+                        <h2 class="fw-bold text-primary">
+
+                            {{ total_delays }}
+
+                        </h2>
+
+                        <small class="text-muted">
+
+                            Total Delays
+
+                        </small>
+
+                    </div>
+
+                    <div class="col-6 mb-4">
+
+                        <h2 class="fw-bold text-danger">
+
+                            {{ today_delays }}
+
+                        </h2>
+
+                        <small class="text-muted">
+
+                            Today's Delays
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between py-2">
+
+                    <span>Registered Equipment</span>
+
+                    <strong class="text-success">
+
+                        {{ total_equipment }}
+
+                    </strong>
+
+                </div>
+
+                <div class="progress mb-3">
+
+                    <div class="progress-bar bg-success"
+                         style="width:100%">
+
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between py-2">
+
+                    <span>System Users</span>
+
+                    <strong class="text-info">
+
+                        {{ total_users }}
+
+                    </strong>
+
+                </div>
+
+                <div class="progress mb-3">
+
+                    <div class="progress-bar bg-info"
+                         style="width:100%">
+
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between py-2">
+
+                    <span>Average Delay</span>
+
+                    <strong class="text-warning">
+
+                        {{ average_duration }}
+
+                    </strong>
+
+                </div>
+
+                <div class="progress">
+
+                    <div class="progress-bar bg-warning"
+                         style="width:100%">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+// Agency Wise Pie Chart
+
+new Chart(document.getElementById("agencyChart"),{
+
+    type:"doughnut",
+
+    data:{
+
+        labels:{{ agency_labels|safe }},
+
+        datasets:[{
+
+            data:{{ agency_values|safe }},
+
+            backgroundColor:[
+                "#4F46E5",
+                "#06B6D4",
+                "#10B981",
+                "#F59E0B",
+                "#EF4444",
+                "#8B5CF6"
+            ],
+
+            borderWidth:1
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        plugins:{
+
+            legend:{
+
+                position:"bottom"
+
+            }
+
+        }
+
+    }
+
+});
+
+
+// Equipment Analysis Chart
+
+new Chart(document.getElementById("equipmentChart"),{
+
+    type:"bar",
+
+    data:{
+
+        labels:{{ equipment_labels|safe }},
+
+        datasets:[{
+
+            label:"Delay Count",
+
+            data:{{ equipment_values|safe }},
+
+            backgroundColor:"#60A5FA",
+
+            borderColor:"#3B82F6",
+
+            borderWidth:1,
+
+            borderRadius:8
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        plugins:{
+
+            legend:{
+
+                display:false
+
+            }
+
+        },
+
+        scales:{
+
+            y:{
+
+                beginAtZero:true,
+
+                ticks:{
+
+                    stepSize:1
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+
+// Shop Distribution Chart
+
+new Chart(document.getElementById("shopChart"),{
+
+    type:"bar",
+
+    data:{
+
+        labels:{{ shop_labels|safe }},
+
+        datasets:[{
+
+            label:"Delay Count",
+
+            data:{{ shop_values|safe }},
+
+            backgroundColor:"#93C5FD",
+
+            borderColor:"#60A5FA",
+
+            borderWidth:1,
+
+            borderRadius:8
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        plugins:{
+
+            legend:{
+
+                display:false
+
+            }
+
+        },
+
+        scales:{
+
+            y:{
+
+                beginAtZero:true,
+
+                ticks:{
+
+                    stepSize:1
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+{% endblock %}

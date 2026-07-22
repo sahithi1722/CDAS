@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+<h3>Date Wise Report</h3>
+
+</div>
+
+<div class="card-body">
+
+<form method="GET" class="row mb-4">
+
+<div class="col-md-4">
+
+<label>From Date</label>
+
+<input type="date"
+       name="from_date"
+       class="form-control"
+       value="{{ from_date }}">
+
+</div>
+
+<div class="col-md-4">
+
+<label>To Date</label>
+
+<input type="date"
+       name="to_date"
+       class="form-control"
+       value="{{ to_date }}">
+
+</div>
+
+<div class="col-md-4 mt-4">
+
+<button class="btn btn-success">
+
+Search
+
+</button>
+
+<a href="{% url 'date_wise_report' %}"
+   class="btn btn-secondary">
+
+Reset
+
+</a>
+
+</div>
+
+</form>
+
+<table class="table table-bordered table-striped">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Date</th>
+
+<th>Shop</th>
+
+<th>Equipment</th>
+
+<th>Agency</th>
+
+<th>Duration</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for d in delays %}
+
+<tr>
+
+<td>{{ d.delay_from|date:"d-m-Y H:i" }}</td>
+
+<td>{{ d.shop.shop_desc }}</td>
+
+<td>{{ d.equipment.eqpt_desc }}</td>
+
+<td>{{ d.agency.agency_name }}</td>
+
+<td>{{ d.delay_duration }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="5" class="text-center">
+
+No Records Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

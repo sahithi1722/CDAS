@@ -1,0 +1,64 @@
+body{
+
+    background:#f4f6f9;
+
+}
+
+.sidebar{
+
+    min-height:90vh;
+
+    border-right:1px solid #ddd;
+
+}
+
+.sidebar a{
+
+    text-align:left;
+
+}
+
+table{
+
+    background:white;
+
+}
+
+h2{
+
+    margin-bottom:20px;
+
+}
+
+.card{
+
+    box-shadow:0px 2px 8px rgba(0,0,0,0.1);
+
+}
+.card-header{
+    font-weight:600;
+}
+
+.list-group-item{
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.list-group-item:hover{
+    background:#f8f9fa;
+    transform:scale(1.01);
+}
+
+.badge{
+    font-size:14px;
+    min-width:90px;
+}
+
+.list-group-item h5{
+    font-weight:700;
+    margin-bottom:2px;
+}
+
+.list-group-item small{
+    font-size:14px;
+}

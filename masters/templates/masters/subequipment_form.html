@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h3>
+
+                {% if subequipment %}
+                    Edit Sub Equipment
+                {% else %}
+                    Add Sub Equipment
+                {% endif %}
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            {% if error %}
+
+            <div class="alert alert-danger">
+
+                {{ error }}
+
+            </div>
+
+            {% endif %}
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label>Equipment</label>
+
+                    <select
+                        name="equipment"
+                        class="form-select">
+
+                        {% for equipment in equipments %}
+
+                        <option
+                            value="{{ equipment.id }}"
+                            {% if subequipment and subequipment.equipment.id == equipment.id %}
+                                selected
+                            {% endif %}>
+
+                            {{ equipment.eqpt_desc }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Sub Equipment Code</label>
+
+                    <input
+                        type="text"
+                        name="sub_eqpt_code"
+                        class="form-control"
+                        value="{{ subequipment.sub_eqpt_code|default:'' }}"
+                        required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Sub Equipment Description</label>
+
+                    <input
+                        type="text"
+                        name="sub_eqpt_desc"
+                        class="form-control"
+                        value="{{ subequipment.sub_eqpt_desc|default:'' }}"
+                        required>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    {% if subequipment %}
+                        Update
+                    {% else %}
+                        Save
+                    {% endif %}
+
+                </button>
+
+                <a href="{% url 'subequipment_list' %}"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

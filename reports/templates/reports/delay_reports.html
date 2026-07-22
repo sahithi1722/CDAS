@@ -1,0 +1,671 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+
+<!-- HEADER -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold text-dark">
+            Delay Reports & Analytics
+        </h2>
+
+        <p class="text-muted">
+            Industrial Delay Monitoring and Performance Analysis
+        </p>
+    </div>
+
+
+    <div>
+
+        <a href="{% url 'export_excel' %}" 
+           class="btn btn-success me-2">
+
+            <i class="bi bi-file-earmark-excel"></i>
+            Export Excel
+
+        </a>
+
+
+        <a href="{% url 'export_pdf' %}"
+           class="btn btn-danger">
+
+            <i class="bi bi-file-earmark-pdf"></i>
+            PDF
+
+        </a>
+
+    </div>
+
+</div>
+
+
+
+
+<!-- FILTER CARD -->
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-primary text-white">
+
+<h5 class="mb-0">
+<i class="bi bi-funnel"></i>
+Report Filters
+</h5>
+
+</div>
+
+
+<div class="card-body">
+
+
+<form method="GET">
+
+
+<div class="row g-3">
+
+
+<div class="col-md-4">
+
+<label class="fw-bold">
+Shop Description
+</label>
+
+
+<select name="shop" class="form-select">
+
+
+<option value="all">
+All Shops
+</option>
+
+
+{% for s in shops %}
+
+<option value="{{s.id}}">
+
+{{s.shop_desc}}
+
+</option>
+
+{% endfor %}
+
+
+</select>
+
+</div>
+
+
+
+
+<div class="col-md-3">
+
+<label class="fw-bold">
+From Date
+</label>
+
+
+<input type="date"
+name="from_date"
+class="form-control">
+
+
+</div>
+
+
+
+<div class="col-md-3">
+
+<label class="fw-bold">
+To Date
+</label>
+
+
+<input type="date"
+name="to_date"
+class="form-control">
+
+
+</div>
+
+
+
+
+<div class="col-md-2 d-flex align-items-end">
+
+
+<button class="btn btn-primary w-100">
+
+<i class="bi bi-search"></i>
+Search
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</form>
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+<!-- KPI CARDS -->
+
+<div class="row mb-4">
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0">
+
+<div class="card-body text-center">
+
+
+<h6 class="text-muted">
+Total Delays
+</h6>
+
+
+<h2 class="fw-bold text-primary">
+
+{{total_delays}}
+
+</h2>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0">
+
+<div class="card-body text-center">
+
+
+<h6 class="text-muted">
+
+Total Downtime
+
+</h6>
+
+
+<h3 class="fw-bold text-danger">
+
+{{total_duration}}
+
+</h3>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0">
+
+<div class="card-body text-center">
+
+
+<h6 class="text-muted">
+
+Report Status
+
+</h6>
+
+
+<h3 class="fw-bold text-success">
+
+Generated
+
+</h3>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0">
+
+<div class="card-body text-center">
+
+
+<h6 class="text-muted">
+
+Data Records
+
+</h6>
+
+
+<h3 class="fw-bold">
+
+{{delays.count}}
+
+</h3>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- TABLE REPORT -->
+
+<div class="card shadow mb-4">
+
+
+<div class="card-header bg-dark text-white">
+
+<h5 class="mb-0">
+
+Version 1 : Tabular Delay Report
+
+</h5>
+
+</div>
+
+
+
+<div class="card-body table-responsive">
+
+
+<table class="table table-hover align-middle">
+
+
+<thead class="table-light">
+
+
+<tr>
+
+<th>Date</th>
+
+<th>Shop</th>
+
+<th>Equipment</th>
+
+<th>Sub Equipment</th>
+
+<th>Agency</th>
+
+<th>From</th>
+
+<th>To</th>
+
+<th>Duration</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+
+{% for d in delays %}
+
+
+<tr>
+
+
+<td>
+
+{{d.delay_from|date:"d-m-Y"}}
+
+</td>
+
+
+
+<td>
+
+{{d.shop.shop_desc}}
+
+</td>
+
+
+
+<td>
+
+{{d.equipment.eqpt_desc}}
+
+</td>
+
+
+
+<td>
+
+{{d.sub_equipment.sub_eqpt_desc}}
+
+</td>
+
+
+
+<td>
+
+{{d.agency.agency_name}}
+
+</td>
+
+
+
+
+<td>
+
+{{d.delay_from|date:"H:i"}}
+
+</td>
+
+
+
+<td>
+
+{{d.delay_upto|date:"H:i"}}
+
+</td>
+
+
+
+
+<td>
+
+<span class="badge bg-danger">
+
+{{d.delay_duration}}
+
+</span>
+
+</td>
+
+
+
+</tr>
+
+
+{% empty %}
+
+
+<tr>
+
+<td colspan="8"
+class="text-center text-muted">
+
+No Delay Records Found
+
+</td>
+
+</tr>
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- GRAPHICAL SECTION -->
+
+<div class="card shadow mb-4">
+
+
+<div class="card-header bg-info text-white">
+
+
+<h5 class="mb-0">
+
+Version 2 : Graphical Analysis
+
+</h5>
+
+
+</div>
+
+
+
+<div class="card-body">
+
+
+<div class="row">
+
+
+<div class="col-md-6">
+
+
+<canvas id="shopChart"></canvas>
+
+
+</div>
+
+
+
+<div class="col-md-6">
+
+
+<canvas id="agencyChart"></canvas>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- INSIGHTS -->
+
+
+<div class="card shadow">
+
+
+<div class="card-header bg-warning">
+
+
+<h5>
+
+Operational Insights
+
+</h5>
+
+
+</div>
+
+
+
+<div class="card-body">
+
+
+<ul class="list-group">
+
+
+<li class="list-group-item">
+
+⚠ Monitor high frequency delay equipment
+
+</li>
+
+
+
+<li class="list-group-item">
+
+🔧 Improve preventive maintenance planning
+
+</li>
+
+
+
+<li class="list-group-item">
+
+⏱ Analyze recurring delay patterns
+
+</li>
+
+
+
+<li class="list-group-item">
+
+📈 Reduce downtime through early action
+
+</li>
+
+
+
+</ul>
+
+
+</div>
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<script>
+
+
+new Chart(
+document.getElementById("shopChart"),
+{
+
+type:"bar",
+
+data:{
+
+labels: {{shop_labels|safe}},
+
+datasets:[{
+
+label:"Shop Delays",
+
+data: {{shop_data|safe}}
+
+}]
+
+}
+
+}
+
+);
+
+
+
+
+
+new Chart(
+document.getElementById("agencyChart"),
+{
+
+type:"doughnut",
+
+data:{
+
+labels: {{agency_labels|safe}},
+
+datasets:[{
+
+label:"Agency",
+
+data: {{agency_data|safe}}
+
+}]
+
+}
+
+}
+
+);
+
+
+
+</script>
+
+
+
+{% endblock %}

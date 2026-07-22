@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="card">
+
+<div class="card-header">
+
+<h3>
+
+{% if shop %}
+
+Edit Shop
+
+{% else %}
+
+Add Shop
+
+{% endif %}
+
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Shop Code
+
+</label>
+
+<input
+type="text"
+name="shop_code"
+class="form-control"
+value="{{ shop.shop_code|default:'' }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Shop Description
+
+</label>
+
+<input
+type="text"
+name="shop_desc"
+class="form-control"
+value="{{ shop.shop_desc|default:'' }}"
+required>
+
+</div>
+
+<button
+type="submit"
+class="btn btn-success">
+
+Save
+
+</button>
+
+<a
+href="{% url 'shop_list' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

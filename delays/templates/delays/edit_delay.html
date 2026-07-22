@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="container mt-4">
+
+
+<h3>Edit Delay</h3>
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+<label>Shop</label>
+
+<select name="shop" class="form-control">
+
+{% for s in shops %}
+
+<option value="{{s.id}}"
+{% if delay.shop.id == s.id %}
+selected
+{% endif %}
+>
+
+{{s.shop_desc}}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+
+
+<br>
+
+
+<label>Equipment</label>
+
+<select name="equipment"
+class="form-control">
+
+
+{% for e in equipment %}
+
+<option value="{{e.id}}"
+
+{% if delay.equipment.id == e.id %}
+selected
+{% endif %}
+
+>
+
+{{e.eqpt_desc}}
+
+</option>
+
+{% endfor %}
+
+
+</select>
+
+
+
+<br>
+
+
+
+<label>Sub Equipment</label>
+
+<select name="sub_equipment"
+class="form-control">
+
+
+{% for se in sub_equipment %}
+
+<option value="{{se.id}}"
+
+{% if delay.subequipment.id == se.id %}
+selected
+{% endif %}
+
+>
+
+{{se.sub_eqpt_desc}}
+
+</option>
+
+{% endfor %}
+
+
+</select>
+
+
+
+<br>
+
+
+
+<label>Agency</label>
+
+<select name="agency"
+class="form-control">
+
+
+{% for a in agencies %}
+
+
+<option value="{{a.id}}"
+
+{% if delay.agency.id == a.id %}
+selected
+{% endif %}
+
+>
+
+{{a.agency_name}}
+
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+
+<br>
+
+
+
+<label>Delay From</label>
+
+<input type="datetime-local"
+name="delay_from"
+class="form-control"
+
+value="{{delay.delay_from|date:'Y-m-d\TH:i'}}"
+
+>
+
+
+
+<br>
+
+
+<label>Delay Upto</label>
+
+<input type="datetime-local"
+name="delay_upto"
+class="form-control"
+
+value="{{delay.delay_upto|date:'Y-m-d\TH:i'}}"
+
+>
+
+
+<br>
+
+
+<label>Description</label>
+
+<textarea name="delay_desc"
+class="form-control">
+
+{{delay.delay_desc}}
+
+</textarea>
+
+
+<br>
+
+
+<button class="btn btn-success">
+
+Update Delay
+
+</button>
+
+
+<a href="{% url 'delay_list' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+</form>
+
+
+</div>
+
+
+{% endblock %}

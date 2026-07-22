@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2>Equipment Master</h2>
+
+<a href="{% url 'equipment_add' %}" class="btn btn-primary mb-3">
+Add Equipment
+</a>
+
+<table class="table table-bordered table-striped">
+
+<thead class="table-dark">
+
+<tr>
+<th>Shop</th>
+<th>Equipment</th>
+<th>Sub Equipment</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for i in data %}
+
+<tr>
+
+<td>{{ i.shop_desc }}</td>
+
+<td>{{ i.eqpt_name }}</td>
+
+<td>{{ i.sub_eqpt_name }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="3" class="text-center">
+No Records Found
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+<h3>Monthly Report</h3>
+
+</div>
+
+<div class="card-body">
+
+<table class="table table-bordered table-striped">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Year</th>
+
+<th>Month</th>
+
+<th>Total Delays</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for r in report %}
+
+<tr>
+
+<td>{{ r.delay_from__year }}</td>
+
+<td>{{ r.delay_from__month }}</td>
+
+<td>{{ r.total }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="3" class="text-center">
+
+No Records Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

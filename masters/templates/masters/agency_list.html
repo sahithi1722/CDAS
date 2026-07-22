@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-secondary text-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h3>Agency Master</h3>
+
+                <a href="{% url 'agency_add' %}" class="btn btn-light">
+                    + Add Agency
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert">
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="GET" class="row mb-3">
+
+                <div class="col-md-10">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search Agency..."
+                        value="{{ search }}">
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-secondary w-100">
+                        Search
+                    </button>
+
+                </div>
+
+            </form>
+
+            <table class="table table-bordered table-striped table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Agency Name</th>
+                        <th width="170">Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for agency in agencies %}
+
+                    <tr>
+
+                        <td>{{ agency.id }}</td>
+
+                        <td>{{ agency.agency_name }}</td>
+
+                        <td>
+
+                            <a href="{% url 'agency_edit' agency.id %}"
+                               class="btn btn-warning btn-sm">
+
+                                Edit
+
+                            </a>
+
+                            <a href="{% url 'agency_delete' agency.id %}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Delete this agency?');">
+
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="3" class="text-center">
+
+                            No Agencies Found
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <nav>
+
+                <ul class="pagination justify-content-center">
+
+                    {% if agencies.has_previous %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ agencies.previous_page_number }}&search={{ search }}">
+
+                            Previous
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                    <li class="page-item active">
+
+                        <span class="page-link">
+
+                            {{ agencies.number }}
+
+                        </span>
+
+                    </li>
+
+                    {% if agencies.has_next %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ agencies.next_page_number }}&search={{ search }}">
+
+                            Next
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

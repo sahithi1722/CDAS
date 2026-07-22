@@ -1,0 +1,657 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="container mt-4">
+
+
+<!-- HEADER -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+
+<div>
+
+<h3 class="fw-bold">
+    Delay Entry
+</h3>
+
+<p class="text-muted mb-0">
+    Enter equipment delay details
+</p>
+
+</div>
+
+
+
+<a href="{% url 'delay_list' %}"
+class="btn view-btn">
+
+View Delay List
+
+</a>
+
+
+</div>
+
+
+
+
+
+<!-- FORM CARD -->
+
+
+<div class="card shadow-sm">
+
+
+<div class="card-header">
+
+<h5 class="mb-0">
+
+Delay Information
+
+</h5>
+
+
+</div>
+
+
+
+
+<div class="card-body">
+
+
+
+<form method="POST">
+
+
+{% csrf_token %}
+
+
+
+
+
+<div class="row">
+
+
+
+<!-- SHOP -->
+
+<div class="col-md-6 mb-3">
+
+
+<label class="form-label">
+
+Shop
+
+</label>
+
+
+<select name="shop"
+id="shop"
+class="form-select"
+required>
+
+
+<option value="">
+
+Select Shop
+
+</option>
+
+
+{% for s in shops %}
+
+
+<option value="{{s.id}}">
+
+{{s.shop_desc}}
+
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<!-- EQUIPMENT -->
+
+
+<div class="col-md-6 mb-3">
+
+
+<label class="form-label">
+
+Equipment
+
+</label>
+
+
+<select name="equipment"
+id="equipment"
+class="form-select"
+required>
+
+
+<option value="">
+
+Select Equipment
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+<!-- SUB EQUIPMENT -->
+
+
+<div class="col-md-6 mb-3">
+
+
+<label class="form-label">
+
+Sub Equipment
+
+</label>
+
+
+<select name="sub_equipment"
+id="sub_equipment"
+class="form-select"
+required>
+
+
+<option value="">
+
+Select Sub Equipment
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<!-- AGENCY -->
+
+
+<div class="col-md-6 mb-3">
+
+
+<label class="form-label">
+
+Agency
+
+</label>
+
+
+<select name="agency"
+class="form-select"
+required>
+
+
+<option value="">
+
+Select Agency
+
+</option>
+
+
+{% for a in agencies %}
+
+
+<option value="{{a.id}}">
+
+{{a.agency_name}}
+
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- FROM TIME -->
+
+
+<div class="col-md-6 mb-3">
+
+
+<label class="form-label">
+
+Delay From
+
+</label>
+
+
+<input type="datetime-local"
+
+name="delay_from"
+
+class="form-control"
+
+required>
+
+
+</div>
+
+
+
+
+
+
+<!-- UPTO TIME -->
+
+
+<div class="col-md-6 mb-3">
+
+
+<label class="form-label">
+
+Delay Upto
+
+</label>
+
+
+<input type="datetime-local"
+
+name="delay_upto"
+
+class="form-control"
+
+required>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- DESCRIPTION -->
+
+
+<div class="col-md-12 mb-3">
+
+
+<label class="form-label">
+
+Delay Description
+
+</label>
+
+
+<textarea name="delay_desc"
+
+class="form-control"
+
+rows="4"
+
+placeholder="Enter reason for delay..."
+
+required></textarea>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="text-end">
+
+
+<button type="submit"
+
+class="btn save-btn">
+
+Save Delay
+
+</button>
+
+
+
+<a href="{% url 'delay_list' %}"
+
+class="btn cancel-btn">
+
+Cancel
+
+</a>
+
+
+</div>
+
+
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<style>
+
+
+/* View List Button */
+
+
+.view-btn {
+
+
+background:#E8F1FF;
+
+color:#0B5ED7;
+
+border:1px solid #B6D4FE;
+
+padding:9px 18px;
+
+border-radius:10px;
+
+font-weight:500;
+
+
+}
+
+
+
+.view-btn:hover {
+
+
+background:#B6D4FE;
+
+color:#084298;
+
+
+}
+
+
+
+
+
+/* Card */
+
+
+.card {
+
+
+border-radius:15px;
+
+border:none;
+
+
+}
+
+
+
+
+.card-header {
+
+
+background:#F8F9FA;
+
+border-bottom:1px solid #dee2e6;
+
+font-weight:600;
+
+
+}
+
+
+
+
+/* Save Button */
+
+
+.save-btn {
+
+
+background:#D1E7DD;
+
+color:#0F5132;
+
+border:1px solid #A3CFBB;
+
+padding:9px 20px;
+
+border-radius:10px;
+
+font-weight:500;
+
+
+}
+
+
+.save-btn:hover {
+
+
+background:#A3CFBB;
+
+color:#051B11;
+
+
+}
+
+
+
+
+/* Cancel Button */
+
+
+.cancel-btn {
+
+
+background:#F8D7DA;
+
+color:#842029;
+
+border:1px solid #F1AEB5;
+
+padding:9px 20px;
+
+border-radius:10px;
+
+
+}
+
+
+
+.cancel-btn:hover {
+
+
+background:#F1AEB5;
+
+color:#58151C;
+
+
+}
+
+
+
+
+
+.form-control,
+.form-select {
+
+
+border-radius:8px;
+
+
+}
+
+
+
+label {
+
+
+font-weight:500;
+
+
+}
+
+
+
+</style>
+
+
+
+
+
+<!-- AJAX SCRIPT -->
+
+<script>
+
+
+document.getElementById("shop").addEventListener(
+"change",
+function(){
+
+let shop_id=this.value;
+
+
+fetch(
+"/delay/ajax/get-equipment/?shop_id="+shop_id
+)
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+let equipment=document.getElementById(
+"equipment"
+);
+
+
+equipment.innerHTML=
+'<option value="">Select Equipment</option>';
+
+
+
+data.forEach(function(item){
+
+
+equipment.innerHTML +=
+
+`<option value="${item.id}">
+${item.eqpt_desc}
+</option>`;
+
+
+});
+
+
+});
+
+
+});
+
+
+
+
+
+document.getElementById("equipment").addEventListener(
+"change",
+function(){
+
+
+let equipment_id=this.value;
+
+
+fetch(
+"/delay/ajax/get-sub-equipment/?equipment_id="+equipment_id
+)
+
+
+.then(response=>response.json())
+
+
+.then(data=>{
+
+
+let sub=document.getElementById(
+"sub_equipment"
+);
+
+
+sub.innerHTML=
+'<option value="">Select Sub Equipment</option>';
+
+
+
+data.forEach(function(item){
+
+
+sub.innerHTML +=
+
+`<option value="${item.id}">
+${item.sub_eqpt_desc}
+</option>`;
+
+
+});
+
+
+});
+
+
+});
+
+
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4>Add / Edit User</h4>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Employee Number</label>
+                    <input
+                        type="text"
+                        name="emp_no"
+                        class="form-control"
+                        value="{{ user.emp_no|default:'' }}"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Employee Name</label>
+                    <input
+                        type="text"
+                        name="emp_name"
+                        class="form-control"
+                        value="{{ user.emp_name|default:'' }}"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Department</label>
+                    <input
+                        type="text"
+                        name="department"
+                        class="form-control"
+                        value="{{ user.department|default:'' }}"
+                        placeholder="Enter Department"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Role</label>
+
+                    <select name="role" class="form-select">
+    <option value="sys_admin" {% if user.role == "sys_admin" %}selected{% endif %}>System Admin</option>
+    <option value="dept_admin" {% if user.role == "dept_admin" %}selected{% endif %}>Department Admin</option>
+    <option value="dept_user" {% if user.role == "dept_user" %}selected{% endif %}>Department User</option>
+    <option value="ppm_admin" {% if user.role == "ppm_admin" %}selected{% endif %}>PPM Admin</option>
+    <option value="ppm_user" {% if user.role == "ppm_user" %}selected{% endif %}>PPM User</option>
+</select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+
+                    <select name="status" class="form-select">
+    <option value="Active" {% if user.status == "Active" %}selected{% endif %}>Active</option>
+    <option value="Inactive" {% if user.status == "Inactive" %}selected{% endif %}>Inactive</option>
+</select>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Save User
+                </button>
+
+                <a href="{% url 'user_list' %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

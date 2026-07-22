@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h3>Equipment Master</h3>
+
+                <a href="{% url 'equipment_add' %}"
+                   class="btn btn-light">
+
+                    + Add Equipment
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="alert alert-success alert-dismissible fade show">
+
+                        {{ message }}
+
+                        <button class="btn-close"
+                                data-bs-dismiss="alert">
+                        </button>
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+            <form method="GET" class="row mb-3">
+
+                <div class="col-md-10">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search Equipment..."
+                        value="{{ search }}">
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-success w-100">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+            </form>
+
+            <table class="table table-bordered table-striped table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Shop</th>
+
+                        <th>Equipment Code</th>
+
+                        <th>Equipment Description</th>
+
+                        <th width="170">Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for e in equipment %}
+
+                    <tr>
+
+                        <td>{{ e.id }}</td>
+
+                        <td>{{ e.shop.shop_desc }}</td>
+
+                        <td>{{ e.eqpt_code }}</td>
+
+                        <td>{{ e.eqpt_desc }}</td>
+
+                        <td>
+
+                            <a href="{% url 'equipment_edit' e.id %}"
+                               class="btn btn-warning btn-sm">
+
+                                Edit
+
+                            </a>
+
+                            <a href="{% url 'equipment_delete' e.id %}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Delete this equipment?');">
+
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="5"
+                            class="text-center">
+
+                            No Equipment Found
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <nav>
+
+                <ul class="pagination justify-content-center">
+
+                    {% if equipment.has_previous %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ equipment.previous_page_number }}&search={{ search }}">
+
+                            Previous
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                    <li class="page-item active">
+
+                        <span class="page-link">
+
+                            {{ equipment.number }}
+
+                        </span>
+
+                    </li>
+
+                    {% if equipment.has_next %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ equipment.next_page_number }}&search={{ search }}">
+
+                            Next
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

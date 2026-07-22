@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h3>Shop Master</h3>
+
+                <a href="{% url 'shop_add' %}"
+                   class="btn btn-light">
+
+                    + Add Shop
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="alert alert-success">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+            <form method="GET" class="row mb-3">
+
+                <div class="col-md-10">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search Shop..."
+                        value="{{ search }}">
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button
+                        class="btn btn-primary w-100">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+            </form>
+
+            <table class="table table-bordered table-striped">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Shop Code</th>
+
+                        <th>Shop Description</th>
+
+                        <th width="170">
+
+                            Actions
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for shop in shops %}
+
+                    <tr>
+
+                        <td>{{ shop.id }}</td>
+
+                        <td>{{ shop.shop_code }}</td>
+
+                        <td>{{ shop.shop_desc }}</td>
+
+                        <td>
+
+                            <a href="{% url 'shop_edit' shop.id %}"
+                               class="btn btn-warning btn-sm">
+
+                                Edit
+
+                            </a>
+
+                            <a href="{% url 'shop_delete' shop.id %}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Delete this shop?');">
+
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="4" class="text-center">
+
+                            No Shops Found
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <nav>
+
+                <ul class="pagination justify-content-center">
+
+                    {% if shops.has_previous %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ shops.previous_page_number }}&search={{ search }}">
+
+                            Previous
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                    <li class="page-item active">
+
+                        <span class="page-link">
+
+                            {{ shops.number }}
+
+                        </span>
+
+                    </li>
+
+                    {% if shops.has_next %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ shops.next_page_number }}&search={{ search }}">
+
+                            Next
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-info text-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h3>Sub Equipment Master</h3>
+
+                <a href="{% url 'subequipment_add' %}"
+                   class="btn btn-light">
+
+                    + Add Sub Equipment
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="alert alert-success alert-dismissible fade show">
+
+                        {{ message }}
+
+                        <button
+                            class="btn-close"
+                            data-bs-dismiss="alert">
+                        </button>
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+            <form method="GET" class="row mb-3">
+
+                <div class="col-md-10">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search Sub Equipment..."
+                        value="{{ search }}">
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-info w-100">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+            </form>
+
+            <table class="table table-bordered table-striped table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Shop</th>
+
+                        <th>Equipment</th>
+
+                        <th>Sub Equipment Code</th>
+
+                        <th>Sub Equipment Description</th>
+
+                        <th width="170">
+
+                            Actions
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for s in subequipment %}
+
+                    <tr>
+
+                        <td>{{ s.id }}</td>
+
+                        <td>{{ s.equipment.shop.shop_desc }}</td>
+
+                        <td>{{ s.equipment.eqpt_desc }}</td>
+
+                        <td>{{ s.sub_eqpt_code }}</td>
+
+                        <td>{{ s.sub_eqpt_desc }}</td>
+
+                        <td>
+
+                            <a href="{% url 'subequipment_edit' s.id %}"
+                               class="btn btn-warning btn-sm">
+
+                                Edit
+
+                            </a>
+
+                            <a href="{% url 'subequipment_delete' s.id %}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Delete this Sub Equipment?');">
+
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="6"
+                            class="text-center">
+
+                            No Sub Equipment Found
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <nav>
+
+                <ul class="pagination justify-content-center">
+
+                    {% if subequipment.has_previous %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ subequipment.previous_page_number }}&search={{ search }}">
+
+                            Previous
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                    <li class="page-item active">
+
+                        <span class="page-link">
+
+                            {{ subequipment.number }}
+
+                        </span>
+
+                    </li>
+
+                    {% if subequipment.has_next %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ subequipment.next_page_number }}&search={{ search }}">
+
+                            Next
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2>Activity Log</h2>
+
+<table class="table table-bordered table-striped">
+
+    <thead class="table-dark">
+
+        <tr>
+
+            <th>Date</th>
+            <th>Entered By</th>
+            <th>Shop</th>
+            <th>Equipment</th>
+            <th>Sub Equipment</th>
+            <th>Agency</th>
+            <th>Description</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    {% for log in logs %}
+
+    <tr>
+
+        <td>{{ log.created_at|date:"d-m-Y H:i" }}</td>
+
+        <td>{{ log.entered_by }}</td>
+
+        <td>{{ log.shop.shop_desc }}</td>
+
+        <td>{{ log.equipment.eqpt_desc }}</td>
+
+        <td>{{ log.subequipment.sub_eqpt_desc }}</td>
+
+        <td>{{ log.agency.agency_name }}</td>
+
+        <td>{{ log.delay_desc }}</td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="7" class="text-center">
+            No Activity Found
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

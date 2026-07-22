@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="d-flex justify-content-between">
+
+<h3>Delay Records</h3>
+
+<a href="/delay/" class="btn btn-primary">
+Add New Delay
+</a>
+
+</div>
+
+<br>
+
+<table class="table table-bordered table-striped">
+
+<thead class="table-dark">
+<tr>
+    <th>Shop</th>
+    <th>Equipment</th>
+    <th>Sub Equipment</th>
+    <th>Agency</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Duration</th>
+    <th>Description</th>
+    <th>Entered By</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for d in delays %}
+
+<tr>
+    <td>{{ d.shop_desc }}</td>
+    <td>{{ d.eqpt_name }}</td>
+    <td>{{ d.sub_eqpt_name }}</td>
+    <td>{{ d.agency }}</td>
+    <td>{{ d.delay_from }}</td>
+    <td>{{ d.delay_upto }}</td>
+    <td>{{ d.delay_duration }}</td>
+    <td>{{ d.delay_desc }}</td>
+    <td>{{ d.entered_by }}</td>
+</tr>
+
+{% empty %}
+
+<tr>
+    <td colspan="9" class="text-center">
+        No Records Found
+    </td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

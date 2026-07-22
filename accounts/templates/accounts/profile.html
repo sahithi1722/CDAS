@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
+
+<h4>
+My Profile
+</h4>
+
+</div>
+
+
+<div class="card-body">
+
+
+<p>
+<strong>Employee No:</strong>
+{{ user.emp_no }}
+</p>
+
+
+<p>
+<strong>Name:</strong>
+{{ user.emp_name }}
+</p>
+
+
+<p>
+<strong>Role:</strong>
+{{ user.get_role_display }}
+</p>
+
+
+<p>
+<strong>Status:</strong>
+{{ user.status }}
+</p>
+
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

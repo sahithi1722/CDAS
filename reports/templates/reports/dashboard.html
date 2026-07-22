@@ -1,0 +1,489 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h2 class="fw-bold">
+            📊 CDAS Delay Analysis & Reporting Dashboard
+        </h2>
+
+        <p class="text-muted">
+            Welcome back, System Administrator
+        </p>
+    </div>
+
+
+    <!-- FILTER PANEL -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+                🔍 Filter Panel
+            </h5>
+        </div>
+
+
+        <div class="card-body">
+
+            <form method="get">
+
+                <div class="row">
+
+
+                    <div class="col-md-3">
+
+                        <label>
+                            Shop
+                        </label>
+
+                        <select name="shop" class="form-select">
+
+                            <option>
+                                All Shops
+                            </option>
+
+                            {% for shop in shops %}
+
+                            <option value="{{shop.id}}">
+                                {{shop.shop_desc}}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="col-md-3">
+
+                        <label>
+                            Agency
+                        </label>
+
+                        <select name="agency" class="form-select">
+
+                            <option>
+                                All Agencies
+                            </option>
+
+                            {% for agency in agencies %}
+
+                            <option value="{{agency.id}}">
+                                {{agency.agency_name}}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="col-md-3">
+
+                        <label>
+                            From Date
+                        </label>
+
+                        <input type="date"
+                               name="from_date"
+                               class="form-control">
+
+                    </div>
+
+
+
+                    <div class="col-md-3">
+
+                        <label>
+                            To Date
+                        </label>
+
+                        <input type="date"
+                               name="to_date"
+                               class="form-control">
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="mt-3 text-end">
+
+                    <button class="btn btn-primary">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- KPI CARDS -->
+
+
+    <div class="row mb-4">
+
+
+        <div class="col-md-3">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <h6>
+                        Total Delays
+                    </h6>
+
+                    <h2 class="text-primary">
+                        {{total_delays}}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="col-md-3">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <h6>
+                        Total Downtime
+                    </h6>
+
+                    <h2 class="text-danger">
+
+                        {{total_hours}} hrs
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="col-md-3">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <h6>
+                        Avg Duration
+                    </h6>
+
+                    <h2 class="text-success">
+
+                        {{average_duration}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="col-md-3">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <h6>
+                        Shops Covered
+                    </h6>
+
+                    <h2>
+
+                        {{shop_count}}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <!-- CHART SECTION -->
+
+
+    <div class="row">
+
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-header">
+
+                    📈 Delay Trend
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <canvas id="trendChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="col-md-6">
+
+
+            <div class="card shadow">
+
+
+                <div class="card-header">
+
+                    🥧 Agency Distribution
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <canvas id="agencyChart"></canvas>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <!-- EQUIPMENT TABLE -->
+
+
+    <div class="card shadow mt-4">
+
+
+        <div class="card-header">
+
+            🏭 Top Delay Equipment
+
+        </div>
+
+
+        <div class="card-body">
+
+
+            <table class="table table-hover">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Rank
+                        </th>
+
+                        <th>
+                            Equipment
+                        </th>
+
+                        <th>
+                            Delay Count
+                        </th>
+
+                        <th>
+                            Downtime
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody>
+
+
+                {% for item in top_equipment %}
+
+                <tr>
+
+                    <td>
+                        {{forloop.counter}}
+                    </td>
+
+                    <td>
+                        {{item.equipment__eqpt_desc}}
+                    </td>
+
+                    <td>
+                        {{item.total}}
+                    </td>
+
+                    <td>
+                        {{item.duration}}
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+    <!-- EXPORT -->
+
+    <div class="text-end mt-4">
+
+
+        <button class="btn btn-success">
+            Excel
+        </button>
+
+
+        <button class="btn btn-danger">
+            PDF
+        </button>
+
+
+        <button class="btn btn-secondary">
+            Print
+        </button>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- CHART JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+
+new Chart(
+document.getElementById('trendChart'),
+{
+
+type:'line',
+
+data:{
+
+labels: {{months|safe}},
+
+datasets:[{
+
+label:'Delay Count',
+
+data: {{month_data|safe}}
+
+}]
+
+}
+
+});
+
+
+
+
+new Chart(
+document.getElementById('agencyChart'),
+
+{
+
+type:'pie',
+
+data:{
+
+labels: {{agency_labels|safe}},
+
+datasets:[{
+
+data: {{agency_values|safe}}
+
+}]
+
+}
+
+});
+
+
+</script>
+
+
+{% endblock %}

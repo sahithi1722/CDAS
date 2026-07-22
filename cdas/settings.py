@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-s+70w#tqx#u19u+@5=9o_qa0b9*61$3bqt57)!%^4_q%ex&_iw
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    "cdas-baqm.onrender.com",
     "localhost",
     "127.0.0.1",
 ]

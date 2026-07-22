@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'cdas.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cdas_db',
+        'NAME': BASE_DIR / 'db.sqlite3',
         'USER': 'root',
         'PASSWORD': 'Mysql@123',   
         'HOST': 'localhost',

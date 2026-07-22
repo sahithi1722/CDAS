@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-pip install -r cdas/requirements.txt
+pip install -r requirements.txt
 
-python cdas/manage.py collectstatic --noinput
+python manage.py collectstatic --noinput
 
-python cdas/manage.py migrate
+python manage.py migrate

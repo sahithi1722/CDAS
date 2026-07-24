@@ -1,0 +1,44 @@
+[33mcommit ae22384b85c8d7293afea5cd325654ebacbc60d1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Sahithi <sahithi1722@gmail.com>
+Date:   Fri Jul 24 23:14:58 2026 +0530
+
+    Added master data and sample delay records
+
+ db.sqlite3 | Bin [31m221184[m -> [32m221184[m bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[33mcommit 9b2f38d9873fbdf07cff5d1dc12a6d62534489b8[m
+Author: Sahithi <sahithi1722@gmail.com>
+Date:   Fri Jul 24 22:56:47 2026 +0530
+
+    Fix Render deployment
+
+ db.sqlite3 | Bin [31m221184[m -> [32m221184[m bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[33mcommit 3f80f56c1ede115556d82e34775046a72d9d12e8[m
+Author: Sahithi <sahithi1722@gmail.com>
+Date:   Thu Jul 23 00:33:15 2026 +0530
+
+    Final deployment
+
+ db.sqlite3 | Bin [31m221184[m -> [32m221184[m bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[33mcommit c15a8630c3b7420cc17c7c920a39e46eb9eb238a[m
+Author: Sahithi <sahithi1722@gmail.com>
+Date:   Thu Jul 23 00:23:01 2026 +0530
+
+    Fix render database migration
+
+ db.sqlite3 | Bin [31m221184[m -> [32m221184[m bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[33mcommit 4093f865d2e948f37e04cc3676ede0c90a3c040e[m
+Author: Sahithi <sahithi1722@gmail.com>
+Date:   Thu Jul 23 00:07:09 2026 +0530
+
+    Apply sqlite migrations
+
+ db.sqlite3 | Bin [31m0[m -> [32m221184[m bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)

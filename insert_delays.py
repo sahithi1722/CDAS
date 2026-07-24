@@ -40,39 +40,39 @@ def add_delay(shop_code, eq_code, sub_code, agency_name, desc, mins):
 
 data = [
 
-    ("1", "CT-1", "CHP",
+    ("01", "CT-1", "CHP",
      "Mechanical Maintenance",
      "Crusher conveyor breakdown", 60),
 
-    ("1", "GPL-1", "GPL",
+    ("01", "GPL-1", "GPL",
      "Electrical",
      "Power supply failure", 45),
 
-    ("2", "OT-5", "OCR",
+    ("02", "OT-5", "OCR",
      "Mechanical Maintenance",
      "Oven maintenance issue", 120),
 
-    ("2", "LOCP", "LOCP",
+    ("02", "LOCP", "LOCP",
      "Electrical",
      "Locomotive control fault", 75),
 
-    ("3", "BATTERY-5", "BATTERY",
+    ("03", "BATTERY-5", "BATTERY",
      "Electrical",
      "Battery charging problem", 50),
 
-    ("4", "RMB", "RMB",
+    ("04", "RMB", "RMB",
      "Mechanical Maintenance",
      "Rolling mill breakdown", 150),
 
-    ("5", "PCM", "PCM",
+    ("05", "PCM", "PCM",
      "Instrumentation",
      "Pressure monitoring issue", 90),
 
-    ("6", "CCM-1", "CCD",
+    ("06", "CCM-1", "CCD",
      "Instrumentation",
      "Continuous casting sensor failure", 110),
 
-    ("7", "BAR MILL", "BAR MILL",
+    ("07", "BAR MILL", "BAR MILL",
      "Production",
      "Bar mill equipment delay", 80),
 
